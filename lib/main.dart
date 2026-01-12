@@ -39,13 +39,16 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Map<String,dynamic>> Notes = [];
   @override
   void initState() {
-    
+    super.initState();
     getData();
     
   }
   
   Future<void> getData() async {
-    Notes = await db.GetAllNotes();
+    var Notes_ = await db.GetAllNotes();
+    setState(() {
+      Notes =  Notes_;
+    });
   }
   
   @override
@@ -60,17 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
         return ListTile(title: Text(Notes[index][myDB.TITLE].toString()),subtitle: Text(Notes[index][myDB.DESCRIPTION].toString()),trailing: Text(Notes[index][myDB.SIRIAL_NO].toString()),);
       },itemCount: Notes.length,): Center(child: Text("No note avaiable")),
       floatingActionButton: FloatingActionButton(onPressed: () async {
-        bool check = await db.NewNote(title: "Today is the best day forever.", description: "Hellow Bangladesh, today is the best day in our life because in a day we travel in full bangladesh,That's why we are!!");
-
+        bool check = await db.NewNote(title: "To make a cup of Tea", description: "Water!!!\nagain water!!");
 
         if (check){
           setState(() {
             getData();
           });
         }
-
       },child: Icon(Icons.add),),
-
     );
   }
 }
