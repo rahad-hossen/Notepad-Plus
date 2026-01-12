@@ -62,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(onPressed: () async {
         bool check = await db.NewNote(title: "Today is the best day forever.", description: "Hellow Bangladesh, today is the best day in our life because in a day we travel in full bangladesh,That's why we are!!");
 
+
         if (check){
           setState(() {
             getData();
