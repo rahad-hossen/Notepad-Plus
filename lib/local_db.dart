@@ -12,7 +12,7 @@ class myDB{
   static final String DB_TABLE = 'NoteTable';
   static final String TITLE = 'title';
   static final String DESCRIPTION = 'description';
-  static final String SIRIAL_NO = "sirial_no";
+  static String SIRIAL_NO = "sirial_no";
 
 
   Database? PersonalNOTE;
@@ -48,6 +48,27 @@ class myDB{
     var db = await getDB();
     List<Map<String,dynamic>> allData = await db!.query(DB_TABLE);
     return allData;
+  }
+
+  Future<bool> UpdateNote({required String title,required String description,required String SirialNo}) async {
+    
+    var db = await getDB();
+    int workable = await db!.update(DB_TABLE, {
+
+      TITLE : title,
+      DESCRIPTION : description
+    },where: "SIRIAL_NO = ?",whereArgs: [SirialNo]);
+    return workable > 0;
+  }
+
+  Future<bool> DeleteNote({required String sirialNo}) async {
+    var db = await getDB();
+
+    int isDeleted = await db!.delete(DB_TABLE , where: "SIRIAL_NO = ?",whereArgs: [sirialNo]);
+
+
+    return isDeleted>0;
+
   }
 
 
